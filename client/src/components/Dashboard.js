@@ -22,6 +22,7 @@ function Dashboard(props) {
         {!user && <p>Loading</p>}
       {user.length>0 && <div><p>Welcome {user[0].name}</p><h1>{user[0].roll}</h1></div>}
       {user.length && <Profile users={user}/>}
+      <h1>hi</h1>
     </div>
   );
 }

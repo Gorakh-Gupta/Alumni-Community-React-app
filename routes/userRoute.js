@@ -4,16 +4,9 @@ var cors = require('cors');
 const mongoose = require('mongoose');
 const User=require('../models/user');
 const bcrypt = require('bcrypt');
-const session = require('express-session');
 router.use(cors({ origin: true, credentials: true }));
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json({ extended: false}));
-router.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}))
 router.get('/',async (req,res)=>{
 	const users=await User.find({})
 	.then((user)=>{
@@ -47,10 +40,11 @@ router.post('/',async (req,res)=>{
 })
 router.post('/login',async (req,res)=>{
 	const {rollno,password}=req.body;
-	console.log(password);
 	const userfound=await User.findOne({roll:parseInt(rollno)});
 	console.log(userfound);
-	const authuser=await bcrypt.compare(password,userfound.pass);
+	var authuser=null;
+	if(userfound)
+		authuser=await bcrypt.compare(password,userfound.pass);
 	if(authuser)
 	{
 		res.json(userfound);
@@ -58,7 +52,9 @@ router.post('/login',async (req,res)=>{
 		console.log(req.session.roll);
 	}
 	else
+	{
 		res.json({msg:'NO valid username and password'});
+	}
 
 
 })
