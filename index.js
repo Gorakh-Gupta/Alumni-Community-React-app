@@ -1,8 +1,13 @@
+if(process.env.NODE_ENV!=="production")
+{
+	require('dotenv').config()	
+}
 const express=require('express');
 const app=express();
 const mongoose = require('mongoose');
 const userRouter=require('./routes/userRoute');
 const session=require('express-session');
+// const methodOverride = require('method-override')
 var cors = require('cors');
 mongoose.connect('mongodb://localhost:27017/alumnidata', {useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=>{
@@ -15,6 +20,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/users',userRouter);
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ extended: false }));
+// app.use(methodOverride('_method'));
 app.use(
 	session(
 	{
@@ -27,12 +33,7 @@ app.use(
 			maxAge:3600000
 		}
 	})
-	);
-app.use((req,res,next)=>
-{
-	console.log(req.session);
-	next();
-})
+);
 app.listen(8080,(req,res)=>{
 	console.log('server is listening');
 })

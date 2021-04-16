@@ -4,6 +4,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Dashboard from './components/Dashboard'
 import User from './components/User'
+import Update from './components/Update'
 import Navi from './Navi'
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
               <Route path="/signup" component={Signup} />
               <Route path="/users" component={User} />
               <Route path="/dashboard/:id" exact component={Dashboard} />
+              <Route path="/update/:id" exact component={Update} />
             </Switch>  
         </Router>
     </div>

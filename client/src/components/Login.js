@@ -1,5 +1,6 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import axios from 'axios'
+import Alert from 'react-bootstrap/Alert'
 function Login(props) {
 
 const [rollno, setrollno] = useState('');
@@ -17,16 +18,17 @@ const submitchange=(event)=>{
             }
             else
             {
-                
-                props.history.push('/login');
-                console.log(data.data.msg);
                 setMsg(true);
             }   
             
         })
         .catch((err)=>console.log("Failed to send login request  "+err))
 }
+useEffect(()=>{
+    setMsg(false);    // when user changes the input field, Invalid msg is vanished
+},[rollno,password])
     return (
+        <div>
         <div style={{backgroundColor: "lightblue",height:"240px",width:"300px" ,margin:"110px auto", padding:"20px"}}>
         <p><h1 style={{textAlign:"center"}}>Login</h1></p>
         <form onSubmit={submitchange}>
@@ -34,8 +36,11 @@ const submitchange=(event)=>{
             Password : <input type="Password" name="pass" value={password} onChange={(event)=>setpassword(event.target.value)}/><br/><br/>
             <button type="Submit">Submit</button>
             
-        </form>
-        {msg && <h6>Incorrect username or password</h6>}         
+        </form>         
+    </div>
+        {msg && <Alert variant="danger" style={{width:"300px",margin:"20px auto" }}>
+				<Alert.Heading>Incorrect Username or Password</Alert.Heading>	
+	  	</Alert>}
     </div>
     )
 }

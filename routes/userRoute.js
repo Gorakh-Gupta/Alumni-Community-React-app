@@ -19,7 +19,7 @@ router.get('/',async (req,res)=>{
 })
 router.post('/',async (req,res)=>{
 	 console.log(req.body);
-	const {name,roll,mob,year,branch,email,pass}=req.body;
+	const {name,roll,mob,year,branch,mail,pass}=req.body;
 		bcrypt.hash(pass, 12, async function(err, hash) {
 		const newstudent=new User({
 		name:name,
@@ -27,7 +27,7 @@ router.post('/',async (req,res)=>{
 		mob:mob,
 		year:year,
 		branch:branch,
-		email:email,
+		mail:mail,
 		pass:hash
 		});
 		await newstudent.save()
@@ -35,7 +35,10 @@ router.post('/',async (req,res)=>{
 		console.log('Submitted')
 		res.json({msg:'Signed Up Successfully'})
 		})
-		.catch(err=>console.log(err));
+		.catch(err=>{
+			res.json({code:1});
+			console.log(err);
+		});
 	});		
 })
 router.post('/login',async (req,res)=>{
@@ -65,5 +68,14 @@ router.get('/:id',async (req,res)=>{
 		res.json(data);
 	})
 	.catch((err)=>console.log(err))
+})
+router.put('/:id/edit',async (req,res)=>{
+	const {id}=req.params;
+	const user=await User.findOneAndUpdate({roll:parseInt(id)},req.body,{runValidators:true,new:true})
+	.then(()=>res.json({code:0}))
+	.catch((err)=>{
+		res.json({code:1});
+		console.log(err)
+	})
 })
 module.exports=router;

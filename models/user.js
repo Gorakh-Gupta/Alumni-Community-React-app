@@ -26,13 +26,14 @@ const userSchema = new Schema({
 		min:1000000000,
 		max:9999999999
 	},
-	email:{
+	mail:{
 		type:String
 	}, 
 	pass:{
 		type:String,
 		required:true
-	}
+	},
+	photo:String
 });
 const User=new mongoose.model('User',userSchema);
 module.exports=User;
