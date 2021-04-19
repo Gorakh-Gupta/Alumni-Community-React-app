@@ -4,6 +4,9 @@ var cors = require('cors');
 const mongoose = require('mongoose');
 const User=require('../models/user');
 const bcrypt = require('bcrypt');
+const multer  = require('multer')
+const {storage}=require('../cloudinary')
+const upload = multer({ storage })
 router.use(cors({ origin: true, credentials: true }));
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json({ extended: false}));
@@ -58,8 +61,6 @@ router.post('/login',async (req,res)=>{
 	{
 		res.json({msg:'NO valid username and password'});
 	}
-
-
 })
 router.get('/:id',async (req,res)=>{
 	const {id}=req.params
@@ -77,5 +78,14 @@ router.put('/:id/edit',async (req,res)=>{
 		res.json({code:1});
 		console.log(err)
 	})
+})
+router.post('/:id/profileUpdate',upload.single('file'),async (req,res)=>{
+	const {id}=req.params;
+	const newphoto={url:req.file.path,
+					filename:req.file.filename}
+	const user=await User.updateOne({roll:parseInt(id)},{photo:newphoto},{runValidators:true,new:true})
+	.then((data)=>console.log(data))
+	.catch((err)=>console.log(err))
+	res.send();
 })
 module.exports=router;

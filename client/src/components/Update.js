@@ -81,10 +81,6 @@ function Update(props) {
                     <option>EE</option>
                     </Form.Control>
                 </Form.Group>
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Profile Photo</Form.Label>
-                    <Form.Control type="file" accept=".jpg, .png,.jpeg" />
-                </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>

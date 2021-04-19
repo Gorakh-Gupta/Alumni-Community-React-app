@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard'
 import User from './components/User'
 import Update from './components/Update'
 import Navi from './Navi'
+import ChangeProfile from './components/ChangeProfile'
 function App() {
   return (
     <div>
@@ -17,6 +18,8 @@ function App() {
               <Route path="/users" component={User} />
               <Route path="/dashboard/:id" exact component={Dashboard} />
               <Route path="/update/:id" exact component={Update} />
+              <Route path="/changeProfile/:id" exact component={ChangeProfile} />
+              
             </Switch>  
         </Router>
     </div>

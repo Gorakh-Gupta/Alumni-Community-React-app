@@ -7,7 +7,6 @@ const app=express();
 const mongoose = require('mongoose');
 const userRouter=require('./routes/userRoute');
 const session=require('express-session');
-// const methodOverride = require('method-override')
 var cors = require('cors');
 mongoose.connect('mongodb://localhost:27017/alumnidata', {useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=>{
@@ -20,7 +19,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/users',userRouter);
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ extended: false }));
-// app.use(methodOverride('_method'));
 app.use(
 	session(
 	{

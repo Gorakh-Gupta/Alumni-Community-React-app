@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card'
 import Nav from 'react-bootstrap/Nav'
 import axios from 'axios'
 import Profile from './Profile'
+import ChangeProfile from './ChangeProfile';
 function Dashboard(props) {
     const [user, setUser] = useState([]);
     useEffect(() => {
@@ -42,7 +43,7 @@ function Dashboard(props) {
       {user.length && 
       
       <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="https://static.toiimg.com/thumb/msid-73540687,width-800,height-600,resizemode-75,imgsize-575035,pt-32,y_pad-40/73540687.jpg" />
+         <Card.Img variant="top" src={user[0].photo.url} />
         <Card.Body>
           <Card.Title>{user[0].name}</Card.Title>
           <Card.Text>
@@ -52,7 +53,7 @@ function Dashboard(props) {
             <h6>Mobile:{user[0].mob}</h6>
             <h6>Email:{user[0].mail}</h6>
           </Card.Text>
-          <Button variant="primary">Profile Details</Button>
+          <Button variant="primary" onClick={()=>props.history.push("/Changeprofile/"+props.match.params.id)}>Update Profile Photo</Button>
         </Card.Body>
     </Card>
       }
