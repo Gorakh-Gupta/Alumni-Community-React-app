@@ -21,7 +21,7 @@ function Signup(props) {
 				event.preventDefault();
 				// console.log(this.state);
 				console.log("hi");
-				await axios.post('http://localhost:8080/',{name,roll,mail,mob,year,branch,pass})
+				await axios.post('http://localhost:8080/users/',{name,roll,mail,mob,year,branch,pass})
 				.then((data)=>
 				{
 					//+{name,roll,mail,mob,year,branch,pass}

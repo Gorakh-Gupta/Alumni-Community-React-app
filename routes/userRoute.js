@@ -1,7 +1,6 @@
 const express=require('express');
-const session=require('express-session')
 const router=express.Router();
-const cors = require('cors');
+var cors = require('cors');
 const mongoose = require('mongoose');
 const User=require('../models/user');
 const bcrypt = require('bcrypt');
@@ -11,19 +10,6 @@ const upload = multer({ storage })
 router.use(cors({ origin: true, credentials: true }));
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json({ extended: false}));
-router.use(
-	session(
-	{
-		secret:process.env.SESSION_SECRET,
-		saveUninitialized:true,
-		resave:false,
-		cookie:
-		{
-			httpOnly:true,
-			maxAge:3600000
-		}
-	})
-);
 router.get('/',async (req,res)=>{
 	const users=await User.find({})
 	.then((user)=>{
@@ -69,7 +55,7 @@ router.post('/login',async (req,res)=>{
 	{
 		res.json(userfound);
 		req.session.roll=userfound.roll;
-		console.log(req.session);
+		console.log(req.session.roll);
 	}
 	else
 	{
