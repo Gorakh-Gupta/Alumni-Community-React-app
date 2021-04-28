@@ -47,7 +47,7 @@ function ChangeProfile(props) {
                 {/* <Button variant="primary"></Button> */}
                 <form onSubmit={submithandler}>
                     <input type="file" accept="image/*" onChange={(e)=>setSelectedFile(e.target.files[0])}/>
-                <Button type="submit" variant="primary">Update</Button>
+                {selectedFile && <Button type="submit" variant="primary">Update</Button>}
                 </form>
             </Card.Body>
             </Card>
