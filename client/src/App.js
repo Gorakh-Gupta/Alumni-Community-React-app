@@ -7,6 +7,8 @@ import User from './components/User'
 import Update from './components/Update'
 import Navi from './Navi'
 import ChangeProfile from './components/ChangeProfile'
+import Search from './components/Search'
+import SearchBy from './components/SearchBy'
 function App() {
   return (
     <div>
@@ -14,6 +16,8 @@ function App() {
             <Switch>
               <Route path="/" exact component={Navi} />
               <Route path="/login" component={Login} />
+              <Route path="/search" component={Search} />
+              <Route path="/searchBy" component={SearchBy} />
               <Route path="/signup" component={Signup} />
               <Route path="/users" component={User} />
               <Route path="/dashboard/:id" exact component={Dashboard} />
