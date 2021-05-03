@@ -20,6 +20,7 @@ function Navi() {
                     Alumni Tracking System</Navbar.Brand>
                     <Navbar.Collapse className="justify-content-end">
                 <Nav className="mr-auto" className="justify-content-center">
+                        <Nav.Link href="/notablealumni">Notable Alumni</Nav.Link>
                         <Nav.Link href="/signup">Signup</Nav.Link>
                         <Nav.Link href="login">Login</Nav.Link>
                     </Nav>

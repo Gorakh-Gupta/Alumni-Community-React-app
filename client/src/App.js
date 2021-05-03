@@ -9,6 +9,8 @@ import Navi from './Navi'
 import ChangeProfile from './components/ChangeProfile'
 import Search from './components/Search'
 import SearchBy from './components/SearchBy'
+import NotableAlumni from './components/NotableAlumni'
+import SubmitNotable from './components/SubmitNotable'
 function App() {
   return (
     <div>
@@ -17,13 +19,14 @@ function App() {
               <Route path="/" exact component={Navi} />
               <Route path="/login" component={Login} />
               <Route path="/search" component={Search} />
+              <Route path="/notablealumni" component={NotableAlumni} />
               <Route path="/searchBy" component={SearchBy} />
               <Route path="/signup" component={Signup} />
               <Route path="/users" component={User} />
               <Route path="/dashboard/:id" exact component={Dashboard} />
               <Route path="/update/:id" exact component={Update} />
               <Route path="/changeProfile/:id" exact component={ChangeProfile} />
-              
+              <Route path="/addnotablealumni" component={SubmitNotable} />
             </Switch>  
         </Router>
     </div>
