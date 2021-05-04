@@ -1,11 +1,13 @@
 import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import NavDropdown from 'react-bootstrap/NavDropdown'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Nav from 'react-bootstrap/Nav'
 import axios from 'axios'
 import Profile from './Profile'
 import ChangeProfile from './ChangeProfile';
+import NewProfile from './NewProfile';
 function Dashboard(props) {
     const [user, setUser] = useState([]);
     useEffect(() => {
@@ -31,11 +33,21 @@ function Dashboard(props) {
           <Nav.Link href={'/update/'+props.match.params.id}>Update</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="https://www.google.com">Conversation</Nav.Link>
+          <Nav.Link href="/search">Search an Alumni</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-2">Logout</Nav.Link>
+          <Nav.Link href="/search">Raise a Fund/Seek Help</Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href={`/changepassword/${props.match.params.id}`}>Change Password</Nav.Link>
+        </Nav.Item>
+        <NavDropdown title="More" id="nav-dropdown">
+        <NavDropdown.Item eventKey="4.1">Action</NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.2">Another action</NavDropdown.Item>
+        <NavDropdown.Item eventKey="4.3">Something else here</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item eventKey="4.4">Log Out</NavDropdown.Item>
+      </NavDropdown>
       </Nav>
       {!user && <h4>Loading</h4>}
       {user.length>0 && <div><p><h1>Welcome {user[0].name}</h1></p></div>}
@@ -52,6 +64,8 @@ function Dashboard(props) {
             <h6>Year of Graduation:{user[0].year}</h6>
             <h6>Mobile:{user[0].mob}</h6>
             <h6>Email:{user[0].mail}</h6>
+            {user[0].designation && <h6>Designation:{user[0].designation}</h6>}
+            {user[0].organization && <h6>Organization:{user[0].organization}</h6>}
           </Card.Text>
           <Button variant="primary" onClick={()=>props.history.push("/Changeprofile/"+props.match.params.id)}>Update Profile Photo</Button>
         </Card.Body>

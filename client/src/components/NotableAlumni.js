@@ -9,6 +9,7 @@ function NotableAlumni() {
     }, [])
     return (
         <div>
+            
             {notable.map((alumni)=>{
                 return (
                     <div className="profilebody">

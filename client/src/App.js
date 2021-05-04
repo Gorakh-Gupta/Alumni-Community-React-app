@@ -11,6 +11,7 @@ import Search from './components/Search'
 import SearchBy from './components/SearchBy'
 import NotableAlumni from './components/NotableAlumni'
 import SubmitNotable from './components/SubmitNotable'
+import ChangePassword from './components/ChangePassword'
 function App() {
   return (
     <div>
@@ -26,6 +27,7 @@ function App() {
               <Route path="/dashboard/:id" exact component={Dashboard} />
               <Route path="/update/:id" exact component={Update} />
               <Route path="/changeProfile/:id" exact component={ChangeProfile} />
+              <Route path="/changepassword/:id" exact component={ChangePassword} />
               <Route path="/addnotablealumni" component={SubmitNotable} />
             </Switch>  
         </Router>

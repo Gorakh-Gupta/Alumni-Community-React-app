@@ -70,7 +70,28 @@ router.post('/:id/profileUpdate',upload.single('file'),async (req,res)=>{
 	.catch((err)=>console.log(err))
 	res.send();
 })
-
+router.put('/changepassword/:id',async (req,res)=>{
+	const {id}=req.params;
+	const {old,new1}=req.body;
+	const userfound=await User.findOne({roll:parseInt(id)});
+	var authuser=null;
+	if(userfound)
+		authuser=await bcrypt.compare(old,userfound.pass);
+	if(authuser)
+	{
+		bcrypt.hash(new1, 12, async function(err, hash) {
+			await User.updateOne({roll:parseInt(id)},{pass:hash})
+			.then((data)=>res.json({msg:"Updated Password Successfully"}))
+			.catch((err)=>console.log(err))
+		})
+		
+	}
+	else
+	{
+		res.json({msg:"Current Password is Wrong"})
+	}
+	
+})
 router.get('/',async (req,res)=>{
 	const users=await User.find({})
 	.then((user)=>{

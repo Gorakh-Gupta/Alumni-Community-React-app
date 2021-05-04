@@ -164,7 +164,9 @@ h6 {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out
 }
-body {
+.submitnotable {
+  height: 1000px;
+  padding-top: 0px;
   background-color: #2ecc71;
   font-family: source-sans-pro, sans-serif;
 }

@@ -42,7 +42,10 @@ const userSchema = new Schema({
 			type:String,
 			default:"no-img"
 		}
-	}
+	},
+	designation:String,
+	organization:String,
+	bio:String
 });
 const User=new mongoose.model('User',userSchema);
 module.exports=User;

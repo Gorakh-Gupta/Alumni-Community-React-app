@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 function Update(props) {
     const id=props.match.params.id;
     const [user, setUser] = useState({
-        name:'',roll:0,branch:'',mail:'',mob:0,year:0,pass:''
+        name:'',roll:0,branch:'',mail:'',mob:0,year:0,pass:'',designation:'',organization:''
     })
     const [success, setSuccess] = useState(false)
     const [fail, setFail] = useState(false)
@@ -71,6 +71,14 @@ function Update(props) {
                     <Form.Label>Mobile No.</Form.Label>
                     <Form.Control type="tel" value={user.mob} onChange={(e)=>setUser({...user,mob:e.target.value})}/>
                 </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Designation</Form.Label>
+                    <Form.Control type="tel" value={user.designation} onChange={(e)=>setUser({...user,designation:e.target.value})}/>
+                </Form.Group>
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Organization</Form.Label>
+                    <Form.Control type="tel" value={user.organization} onChange={(e)=>setUser({...user,organization:e.target.value})}/>
+                </Form.Group>
                 <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label>Branch</Form.Label>
                     <Form.Control as="select" value={user.branch} onChange={(e)=>setUser({...user,branch:e.target.value})}>
@@ -80,6 +88,10 @@ function Update(props) {
                     <option>ECE</option>
                     <option>EE</option>
                     </Form.Control>
+                </Form.Group>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Label>Bio</Form.Label>
+                    <Form.Control as="textarea" rows={3} value={user.bio} onChange={(e)=>setUser({...user,bio:e.target.value})}/>
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit

@@ -16,7 +16,7 @@ function SubmitNotable(props) {
         .catch((err)=>console.log(err))
     }
     return (
-        <div>
+        <div className="submitnotable">
             <h1 className="subs">
                 Add a Notable Alumni
             </h1>
