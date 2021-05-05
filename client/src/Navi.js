@@ -26,7 +26,7 @@ function Navi() {
                     </Nav>
                     </Navbar.Collapse>
                     </Navbar>
-                    <img style={{height:350,width:885,margin:40,marginLeft:300}} src="http://nitp.ac.in/nitpnew/images/1.jpg" />
+                    <Image fluid style={{height:350,width:885,margin:40,marginLeft:300}} src="http://nitp.ac.in/nitpnew/images/1.jpg" />
                         <Jumbotron>
                 <h1 style={{marginLeft:300}}>Welcome Alumni of NIT Patna</h1>
                 <p style={{marginLeft:300}}>

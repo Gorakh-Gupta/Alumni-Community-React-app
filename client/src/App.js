@@ -12,6 +12,9 @@ import SearchBy from './components/SearchBy'
 import NotableAlumni from './components/NotableAlumni'
 import SubmitNotable from './components/SubmitNotable'
 import ChangePassword from './components/ChangePassword'
+import Community from './components/Community'
+import Reset from './components/Reset'
+import ResetPass from './components/ResetPass'
 function App() {
   return (
     <div>
@@ -19,11 +22,14 @@ function App() {
             <Switch>
               <Route path="/" exact component={Navi} />
               <Route path="/login" component={Login} />
+              <Route path="/resetpassword" exact component={ResetPass} />
+              <Route path="/reset/:token" component={Reset} />
               <Route path="/search" component={Search} />
               <Route path="/notablealumni" component={NotableAlumni} />
               <Route path="/searchBy" component={SearchBy} />
               <Route path="/signup" component={Signup} />
               <Route path="/users" component={User} />
+              <Route path="/community" component={Community} />
               <Route path="/dashboard/:id" exact component={Dashboard} />
               <Route path="/update/:id" exact component={Update} />
               <Route path="/changeProfile/:id" exact component={ChangeProfile} />

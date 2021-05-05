@@ -36,7 +36,7 @@ function Dashboard(props) {
           <Nav.Link href="/search">Search an Alumni</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/search">Raise a Fund/Seek Help</Nav.Link>
+          <Nav.Link href="/community">COMMUNTY</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href={`/changepassword/${props.match.params.id}`}>Change Password</Nav.Link>

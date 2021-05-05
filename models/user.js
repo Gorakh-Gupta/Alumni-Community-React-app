@@ -45,7 +45,11 @@ const userSchema = new Schema({
 	},
 	designation:String,
 	organization:String,
-	bio:String
+	bio:String,
+	token:String,
+	expire:{
+		type:Number,
+	}
 });
 const User=new mongoose.model('User',userSchema);
 module.exports=User;

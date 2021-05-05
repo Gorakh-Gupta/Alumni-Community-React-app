@@ -45,7 +45,8 @@ function Update(props) {
         .catch((err)=>console.log(err))
     }
     return (
-        <div className='container' style={{marginTop:20}}>
+        <div className='container' style={{width:500,height:50,marginLeft:450,marginTop:20}}>
+            <h1>Update your Profile</h1>
             <Form onSubmit={osubmit}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Name</Form.Label>
@@ -93,8 +94,8 @@ function Update(props) {
                     <Form.Label>Bio</Form.Label>
                     <Form.Control as="textarea" rows={3} value={user.bio} onChange={(e)=>setUser({...user,bio:e.target.value})}/>
                 </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
+                <Button variant="primary" className="btn btn-primary btn-block" type="submit">
+                    Update
                 </Button>
             </Form>
             {success && 

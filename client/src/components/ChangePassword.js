@@ -34,7 +34,7 @@ function ChangePassword(props) {
         }
     }
     return (
-        <div>
+        <div style={{width:400,height:50,marginLeft:500,marginTop:150}}>
             <Jumbotron>
                 <h1>Change Password</h1>
             <Form onSubmit={submithandler}>

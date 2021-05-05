@@ -8,10 +8,13 @@ const bcrypt = require('bcrypt');
 const multer  = require('multer')
 const {storage}=require('../cloudinary')
 const upload = multer({ storage })
+const crypto=require('crypto')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.MAILAPI)
+
 router.use(cors({ origin: true, credentials: true }));
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json({ extended: false}));
-
 router.post('/login',async (req,res)=>{
 	const {rollno,password}=req.body;
 	const userfound=await User.findOne({roll:parseInt(rollno)});
@@ -29,6 +32,63 @@ router.post('/login',async (req,res)=>{
 	{
 		res.json({msg:'NO valid username and password'});
 	}
+})
+router.post('/resetpass',async (req,res)=>{
+	const {pass,token}=req.body;
+	await User.findOne({token:token,expire:{$gt:Date.now()}})
+	.then((user)=>{
+		if(!user)
+		{
+			res.json({msg:"Link Expired"})
+		}
+		else
+		{
+			bcrypt.hash(pass, 12, async function(err, hash) {
+				user.pass=hash;
+				user.token=undefined;
+				user.expire=undefined;
+				await user.save();
+				res.json({msg:"Password changed Successfully"})
+			})
+		}
+	})
+	.catch((err)=>console.log(err))
+})
+router.post('/reset',async (req,res)=>{
+	const {mail}=req.body;
+	await User.findOne({mail:mail})
+	.then((user)=>{
+		if(!user)
+		{
+			res.json({msg:"User doesn't exist!"})
+			return;
+		}
+		crypto.randomBytes(32,async (err,buffer)=>{
+			if(err)
+			{
+				console.log(err);
+				return;
+			}
+			const token=buffer.toString("hex");
+			user.token=token;
+			user.expire=Date.now()+300000;
+			await user.save();
+			sgMail.send(
+			{
+				to:mail,
+				from:{
+					name:"Alumni-Tracking System",
+					email:"abhishektheswaraj@hotmail.com"
+					},
+				subject:"Password Reset Link",
+				html:`<p>Dear ${user.name}</p><h4>Click on this <a href="http://localhost:3000/reset/${token}">Link</a> to reset Your Password</h4>`
+			})
+			res.json({msg:"check your Mail"})
+		})
+	})
+	.catch((err)=>{
+		console.log(err);
+	})
 })
 router.get('/notable',async (req,res)=>{
 	await Notable.find({})
@@ -84,7 +144,6 @@ router.put('/changepassword/:id',async (req,res)=>{
 			.then((data)=>res.json({msg:"Updated Password Successfully"}))
 			.catch((err)=>console.log(err))
 		})
-		
 	}
 	else
 	{
@@ -102,6 +161,7 @@ router.get('/',async (req,res)=>{
 	})
 	
 })
+
 router.post('/',async (req,res)=>{
 	 console.log(req.body);
 	const {name,roll,mob,year,branch,mail,pass}=req.body;
@@ -117,6 +177,24 @@ router.post('/',async (req,res)=>{
 		});
 		await newstudent.save()
 		.then(()=>{
+		sgMail.send({
+			to:mail,
+			from:{
+				name:"Alumni Tracking System",
+				email:"abhishektheswaraj@hotmail.com"
+			},
+			subject:"Signed up Successfully",
+			html:`<h4>Welcome to Alumni Tracking System of NIT Patna</h4>
+					<ul>
+					<li> allows the Alumni members to register themselves</li>
+					<li> allows colleges to verify and authenticate their registered alumni</li>
+					<li> provision for alumni members to update their details</li>
+					<li> allows the college to search details based on criteria such as year, department, etc.</li>
+					<li> send messages and emails to alumni members</li>
+					<li> Fund raise and publish notices on the portal</li>
+					<li> Security features with login for every user.</li></ul>`
+
+		})
 		console.log('Submitted')
 		res.json({msg:'Signed Up Successfully'})
 		})

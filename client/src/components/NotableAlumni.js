@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React ,{useState,useEffect} from 'react'
+import { Jumbotron } from 'react-bootstrap';
 function NotableAlumni() {
     const [notable, setNotable] = useState([]);
     useEffect(() => {
@@ -9,7 +10,9 @@ function NotableAlumni() {
     }, [])
     return (
         <div>
-            
+            <Jumbotron>
+                <h1>Notable Alumni</h1>
+            </Jumbotron>
             {notable.map((alumni)=>{
                 return (
                     <div className="profilebody">
