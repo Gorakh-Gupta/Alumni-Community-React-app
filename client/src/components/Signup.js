@@ -44,7 +44,7 @@ function Signup(props) {
 			setCheck(false)
 		}, [name,roll,mail,mob,year,branch,pass])
 	return (
-		<div className='container' style={{marginTop:20}}>
+		<div className='container'  style={{width:400,height:50,marginLeft:500,marginTop:20}}>
 			{success && 
 			<Alert variant="success">
 				<Alert.Heading>Signed Up Successfully. Redirecting to Homepage...</Alert.Heading>
@@ -54,6 +54,7 @@ function Signup(props) {
 					<Alert.Heading>Invalid Input | Unable to Sign Up</Alert.Heading>
 				</Alert>
 			}
+			<h1>Sign Up</h1>
             <Form onSubmit={osubmit}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Name</Form.Label>
@@ -93,10 +94,7 @@ function Signup(props) {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" value={pass} onChange={(e)=>setPass(e.target.value)}/>
                 </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" className="btn btn-primary btn-block" type="submit">
                     Submit
                 </Button>
             </Form>

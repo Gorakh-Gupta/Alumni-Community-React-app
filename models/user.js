@@ -42,6 +42,13 @@ const userSchema = new Schema({
 			type:String,
 			default:"no-img"
 		}
+	},
+	designation:String,
+	organization:String,
+	bio:String,
+	token:String,
+	expire:{
+		type:Number,
 	}
 });
 const User=new mongoose.model('User',userSchema);
