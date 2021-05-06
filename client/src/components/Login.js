@@ -1,23 +1,24 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import axios from 'axios'
 import Alert from 'react-bootstrap/Alert'
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 function Login(props) {
 
 const [rollno, setrollno] = useState('');
 const [password, setpassword] = useState('');
 const [msg, setMsg] = useState(false);
+const {getLogged}=useContext(AuthContext);
 const submitchange=(event)=>{
     event.preventDefault();
          axios.post('http://localhost:8080/users/login',{rollno,password})
         .then((data)=>{
             if(!data.data.msg)
-            {
-                console.log("sent login page") 
+            {   
+                getLogged();
                 props.history.push('/dashboard/'+rollno) ;
-                //redirected to dashboard
             }
             else
             {
@@ -33,7 +34,7 @@ useEffect(()=>{
     return (
         <div>
         
-        <div style={{width:400,height:50,marginLeft:500,marginTop:200}}>
+        <div style={{width:400,height:300,marginLeft:500,marginTop:200}}>
           <form onSubmit={submitchange}>
                 <h3>Sign In</h3>
 
@@ -51,12 +52,13 @@ useEffect(()=>{
                      <a href="/resetpassword">Forgot password?</a>
                 </p>
             </form>
+            {msg && <Alert variant="danger" >
+				<Alert.Heading>Incorrect Username or Password</Alert.Heading>	
+	  	</Alert>}
             </div>
 
 
-        {msg && <Alert variant="danger" style={{width:"300px",margin:"20px auto" }}>
-				<Alert.Heading>Incorrect Username or Password</Alert.Heading>	
-	  	</Alert>}
+        
           
             
     </div>

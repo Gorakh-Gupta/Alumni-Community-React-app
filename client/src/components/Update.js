@@ -27,6 +27,7 @@ function Update(props) {
     }, [])
     useEffect(() => {
         setFail(false);
+        setSuccess(false);
         setSubm(true);
     }, [user])
     const osubmit=(event) => {
@@ -39,14 +40,29 @@ function Update(props) {
             }
             else
             {
+
                 setFail(true);
             }
+            window.scrollTo({
+                  top: 0,
+                  behavior: "smooth"
+                });
         })
         .catch((err)=>console.log(err))
     }
     return (
         <div className='container' style={{width:500,height:50,marginLeft:450,marginTop:20}}>
             <h1>Update your Profile</h1>
+            {success && 
+            <Alert variant="success">
+                <Alert.Heading>Updated Successfully. </Alert.Heading>
+                <Link to={'/dashboard/'+user.roll}>Dashboard</Link>
+            </Alert>}
+            {fail && 
+                <Alert variant="danger">
+                    <Alert.Heading>Invalid Input Unable to Update</Alert.Heading>
+                </Alert>
+            }
             <Form onSubmit={osubmit}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Name</Form.Label>
@@ -98,16 +114,7 @@ function Update(props) {
                     Update
                 </Button>
             </Form>
-            {success && 
-			<Alert variant="success">
-				<Alert.Heading>Updated Successfully. </Alert.Heading>
-                <Link to={'/dashboard/'+user.roll}>Dashboard</Link>
-	  		</Alert>}
-			{fail && 
-				<Alert variant="danger">
-					<Alert.Heading>Invalid Input Unable to Update</Alert.Heading>
-				</Alert>
-			}
+            
         </div>
     )
 }

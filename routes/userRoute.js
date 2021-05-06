@@ -1,6 +1,5 @@
 const express=require('express');
 const router=express.Router();
-var cors = require('cors');
 const mongoose = require('mongoose');
 const User=require('../models/user');
 const Notable=require('../models/notable')
@@ -8,30 +7,43 @@ const bcrypt = require('bcrypt');
 const multer  = require('multer')
 const {storage}=require('../cloudinary')
 const upload = multer({ storage })
+const jwt=require('jsonwebtoken');
 const crypto=require('crypto')
 const sgMail = require('@sendgrid/mail')
+const authUser=require('../middleware/authUser');
 sgMail.setApiKey(process.env.MAILAPI)
 
-router.use(cors({ origin: true, credentials: true }));
-router.use(express.urlencoded({ extended: true }))
-router.use(express.json({ extended: false}));
 router.post('/login',async (req,res)=>{
 	const {rollno,password}=req.body;
 	const userfound=await User.findOne({roll:parseInt(rollno)});
-	console.log(userfound);
 	var authuser=null;
 	if(userfound)
 		authuser=await bcrypt.compare(password,userfound.pass);
 	if(authuser)
 	{
-		res.json(userfound);
-		req.session.roll=userfound.roll;
-		console.log(req.session.roll);
+		const token=jwt.sign({id:userfound.roll},process.env.JWT_SECRET);
+		res.cookie("token",token,{
+			httpOnly:true,
+		}).send();
 	}
 	else
 	{
 		res.json({msg:'NO valid username and password'});
 	}
+})
+router.get('/logout',(req,res)=>{
+	res.cookie("token","",{httpOnly:true,expires:new Date(0)}).send();
+})
+router.get('/loggedIn',(req,res)=>{
+	const token=req.cookies.token;
+	if(!token)
+		return res.status(401).json({msg:"Unauthorized"});
+	const authorized=jwt.verify(token,process.env.JWT_SECRET)
+	if(!authorized)
+	{
+		return res.status(401).json({msg:"Unauthorized"});
+	}
+	res.send(true);
 })
 router.post('/resetpass',async (req,res)=>{
 	const {pass,token}=req.body;
@@ -104,16 +116,16 @@ router.post('/notable',async (req,res)=>{
 	})
 	.catch((err)=>console.log(err))
 })
-router.get('/:id',async (req,res)=>{
-	const {id}=req.params
+router.get('/:id',authUser,async (req,res)=>{
+	const id=req.user;
 	await User.find({roll:id})
 	.then((data)=>{
 		res.json(data);
 	})
 	.catch((err)=>console.log(err))
 })
-router.put('/:id/edit',async (req,res)=>{
-	const {id}=req.params;
+router.put('/:id/edit',authUser,async (req,res)=>{
+	const id=req.user;
 	const user=await User.findOneAndUpdate({roll:parseInt(id)},req.body,{runValidators:true,new:true})
 	.then(()=>res.json({code:0}))
 	.catch((err)=>{
@@ -121,8 +133,8 @@ router.put('/:id/edit',async (req,res)=>{
 		console.log(err)
 	})
 })
-router.post('/:id/profileUpdate',upload.single('file'),async (req,res)=>{
-	const {id}=req.params;
+router.post('/:id/profileUpdate',authUser,upload.single('file'),async (req,res)=>{
+	const id=req.user;
 	const newphoto={url:req.file.path,
 					filename:req.file.filename}
 	const user=await User.updateOne({roll:parseInt(id)},{photo:newphoto},{runValidators:true,new:true})
@@ -130,8 +142,8 @@ router.post('/:id/profileUpdate',upload.single('file'),async (req,res)=>{
 	.catch((err)=>console.log(err))
 	res.send();
 })
-router.put('/changepassword/:id',async (req,res)=>{
-	const {id}=req.params;
+router.put('/changepassword/:id',authUser,async (req,res)=>{
+	const id=req.user;
 	const {old,new1}=req.body;
 	const userfound=await User.findOne({roll:parseInt(id)});
 	var authuser=null;
@@ -163,7 +175,6 @@ router.get('/',async (req,res)=>{
 })
 
 router.post('/',async (req,res)=>{
-	 console.log(req.body);
 	const {name,roll,mob,year,branch,mail,pass}=req.body;
 		bcrypt.hash(pass, 12, async function(err, hash) {
 		const newstudent=new User({

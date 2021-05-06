@@ -5,9 +5,9 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Nav from 'react-bootstrap/Nav'
 import axios from 'axios'
-import Profile from './Profile'
-import ChangeProfile from './ChangeProfile';
-import NewProfile from './NewProfile';
+// import Profile from './Profile'
+// import ChangeProfile from './ChangeProfile';
+// import NewProfile from './NewProfile';
 function Dashboard(props) {
     const [user, setUser] = useState([]);
     useEffect(() => {
@@ -16,13 +16,17 @@ function Dashboard(props) {
             await axios.get('http://localhost:8080/users/'+props.match.params.id)
             .then((users)=>
             {
-                user=setUser(users.data);
+                setUser(users.data);
             })
             .catch((err)=>console.log("oh"+err))
         }
         fetchMyAPI();
     }, [])
-    console.log(user);
+  const outhandler=async ()=>{
+    await axios.get('http://localhost:8080/users/logout')
+    .then(()=>props.history.push('/'))
+    .catch((err)=>console.log(err));
+  }
   return (
     <div>
       <Nav fill variant="tabs" defaultActiveKey={'/dashboard/'+props.match.params.id}>
@@ -46,13 +50,12 @@ function Dashboard(props) {
         <NavDropdown.Item eventKey="4.2">Another action</NavDropdown.Item>
         <NavDropdown.Item eventKey="4.3">Something else here</NavDropdown.Item>
         <NavDropdown.Divider />
-        <NavDropdown.Item eventKey="4.4">Log Out</NavDropdown.Item>
+        <NavDropdown.Item onClick={outhandler}>Log Out</NavDropdown.Item>
       </NavDropdown>
       </Nav>
-      {!user && <h4>Loading</h4>}
+      {user.length===0 && <h4>Loading</h4>}
       {user.length>0 && <div><p><h1>Welcome {user[0].name}</h1></p></div>}
-      {/* {user.length && <Profile users={user}/>} */}
-      {user.length && 
+      {user.length>0 && 
       
       <Card style={{ width: '18rem' }}>
          <Card.Img variant="top" src={user[0].photo.url} />
@@ -71,7 +74,7 @@ function Dashboard(props) {
         </Card.Body>
     </Card>
       }
-        
+
     </div>
   );
 }

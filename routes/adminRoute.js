@@ -2,8 +2,10 @@ const express=require('express');
 const router=express.Router();
 const mongoose=require('mongoose');
 const User=require('../models/user');
-const cors=require('cors');
-router.use(cors({ origin: true, credentials: true }));
+const Admin=require('../models/Admin')
+const bcrypt=require('bcrypt')
+const jwt=require('jsonwebtoken');
+const auth=require('../middleware/auth');
 
 router.get('/searchBy',async (req,res)=>{
 	const year=req.query.year;
@@ -37,12 +39,39 @@ router.get('/searchBy',async (req,res)=>{
 	}
 })
 
-router.get('/search',async (req,res)=>{
+router.post('/login',async (req,res)=>{
+	const {mob,password}=req.body;
+	const userfound=await Admin.findOne({mob:parseInt(mob)});
+	var authuser=null;
+	if(userfound)
+		authuser=await bcrypt.compare(password,userfound.pass);
+	if(authuser)
+	{
+		const token=jwt.sign({
+			id:userfound._id,
+		},process.env.JWT_SECRET)
+		console.log(token);
+		res.cookie("token",token,{
+			httpOnly:true
+		}).send();
+	}
+	else
+	{
+		res.json({msg:'NO valid username and password'});
+	}
+})
+router.get('/logout',async (req,res)=>{
+	res.cookie("token","",{
+		httpOnly:true,
+		expires:new Date(0),
+	}).send();
+})
+router.get('/search',auth,async (req,res)=>{
 	await User.find({name:{$regex:req.query.q, $options:'i'}})
 	.then((data)=>{
 		res.json(data);
 	})
-	.catch((data)=>console.log(error))
+	.catch((error)=>console.log(error))
 })
 router.delete('/delete/:id',async (req,res)=>{
 	const {id}=req.params;
@@ -50,4 +79,22 @@ router.delete('/delete/:id',async (req,res)=>{
 	.then((data)=>res.send())
 	.catch((err)=>console.log(err))
 })
+router.post('/',async (req,res)=>{
+	const {name,mob,mail,pass}=req.body;
+		bcrypt.hash(pass, 12, async (err, hash)=>{
+		const newstudent=new Admin({
+		name:name,
+		mob:mob,
+		mail:mail,
+		pass:hash
+		});
+		await newstudent.save()
+		.then(()=>res.json({msg:'Signed Up Successfully'}))
+		.catch(err=>{
+			res.json({code:1});
+			console.log(err);
+		})
+
+	})
+});
 module.exports=router;

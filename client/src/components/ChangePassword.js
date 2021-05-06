@@ -27,7 +27,8 @@ function ChangePassword(props) {
             .then((data)=>{
                 setMsg(data.data.msg)
                 setInterval(()=>{
-                    window.location.reload(false);
+                    props.history.push('/dashboard/'+id)
+                    // window.location.reload(false);
                 },2000)
             })
             .catch((err)=>console.log(err))
@@ -40,15 +41,15 @@ function ChangePassword(props) {
             <Form onSubmit={submithandler}>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Enter Old Password</Form.Label>
-                    <Form.Control type="password" value={old} onChange={(e)=>setOld(e.target.value)}/>
+                    <Form.Control required type="password" value={old} onChange={(e)=>setOld(e.target.value)}/>
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Enter New Password</Form.Label>
-                    <Form.Control type="password" value={new1} onChange={(e)=>setNew1(e.target.value)}/>
+                    <Form.Control required type="password" value={new1} onChange={(e)=>setNew1(e.target.value)}/>
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Enter New Password</Form.Label>
-                    <Form.Control type="password" value={new2} onChange={(e)=>setNew2(e.target.value)}/>
+                    <Form.Control required type="password" value={new2} onChange={(e)=>setNew2(e.target.value)}/>
                 </Form.Group>
                 {pop && <h6>Password does not match</h6>}
                 {msg.length>0 && <h5>{msg}</h5>}
