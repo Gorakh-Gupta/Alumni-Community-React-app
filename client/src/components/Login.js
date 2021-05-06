@@ -1,20 +1,24 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import axios from 'axios'
 import Alert from 'react-bootstrap/Alert'
+// import { Button } from 'react-bootstrap';
+
+// import { Link } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 function Login(props) {
 
 const [rollno, setrollno] = useState('');
 const [password, setpassword] = useState('');
 const [msg, setMsg] = useState(false);
+const {getLogged}=useContext(AuthContext);
 const submitchange=(event)=>{
     event.preventDefault();
          axios.post('http://localhost:8080/users/login',{rollno,password})
         .then((data)=>{
             if(!data.data.msg)
-            {
-                console.log("sent login page") 
+            {   
+                getLogged();
                 props.history.push('/dashboard/'+rollno) ;
-                //redirected to dashboard
             }
             else
             {
@@ -29,18 +33,34 @@ useEffect(()=>{
 },[rollno,password])
     return (
         <div>
-        <div style={{backgroundColor: "lightblue",height:"240px",width:"300px" ,margin:"110px auto", padding:"20px"}}>
-        <p><h1 style={{textAlign:"center"}}>Login</h1></p>
-        <form onSubmit={submitchange}>
-            Roll No:: : <input type="Number" name="roll" value={rollno} onChange={(event)=>setrollno(event.target.value)}/><br/><br/>
-            Password : <input type="Password" name="pass" value={password} onChange={(event)=>setpassword(event.target.value)}/><br/><br/>
-            <button type="Submit">Submit</button>
-            
-        </form>         
-    </div>
-        {msg && <Alert variant="danger" style={{width:"300px",margin:"20px auto" }}>
+        
+        <div style={{width:400,height:300,marginLeft:500,marginTop:200}}>
+          <form onSubmit={submitchange}>
+                <h3>Sign In</h3>
+
+                <div className="form-group">
+                    <label>Roll Number</label>
+                    <input type="number" className="form-control" placeholder="Enter Roll No." value={rollno} onChange={(event)=>setrollno(event.target.value)}/>
+                </div>
+
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" className="form-control" placeholder="Enter password" value={password} onChange={(event)=>setpassword(event.target.value)}/>
+                </div>
+                <button type="submit" className="btn btn-primary btn-block">Submit</button>
+                <p className="forgot-password text-right">
+                     <a href="/resetpassword">Forgot password?</a>
+                </p>
+            </form>
+            {msg && <Alert variant="danger" >
 				<Alert.Heading>Incorrect Username or Password</Alert.Heading>	
 	  	</Alert>}
+            </div>
+
+
+        
+          
+            
     </div>
     )
 }
