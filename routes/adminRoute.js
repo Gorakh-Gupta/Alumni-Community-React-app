@@ -6,7 +6,8 @@ const Admin=require('../models/Admin')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken');
 const auth=require('../middleware/auth');
-
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.MAILAPI)
 router.get('/searchBy',async (req,res)=>{
 	const year=req.query.year;
 	const branch=req.query.branch;
@@ -65,6 +66,22 @@ router.get('/logout',async (req,res)=>{
 		httpOnly:true,
 		expires:new Date(0),
 	}).send();
+})
+router.post('/sendmail',async (req,res)=>{
+	const {mail,sub,content}=req.body;
+	console.log(req.body);
+	await sgMail.send(
+			{
+				to:mail,
+				from:{
+					name:"Alumni-Tracking System",
+					email:"abhishektheswaraj@hotmail.com"
+					},
+				subject:sub,
+				html:`<h2>${content}</h2>`
+			})
+			res.json({msg:"Mail Successfully Delievered"})
+
 })
 router.get('/search',auth,async (req,res)=>{
 	await User.find({name:{$regex:req.query.q, $options:'i'}})

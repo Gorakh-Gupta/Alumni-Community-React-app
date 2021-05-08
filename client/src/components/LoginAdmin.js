@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import Alert from 'react-bootstrap/Alert'
 
-function LoginAdmin() {
+function LoginAdmin(props) {
     const [mob, setMob] = useState('');
 const [password, setpassword] = useState('');
 const [msg, setMsg] = useState(false);
@@ -12,8 +12,7 @@ const submitchange=(event)=>{
         .then((data)=>{
             if(!data.data.msg)
             {
-                console.log("sent login page") 
-                // props.history.push('/dashboard/'+rollno) ;
+                props.history.push('/admindashboard') ;
             }
             else
             {

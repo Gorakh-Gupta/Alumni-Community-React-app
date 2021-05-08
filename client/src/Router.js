@@ -19,6 +19,8 @@ import UpdateByAdmin from './components/UpdateByAdmin'
 import SignupAdmin from './components/SignupAdmin'
 import LoginAdmin from './components/LoginAdmin'
 import AuthContext from './context/AuthContext'
+import SendMessage from './components/SendMessage'
+import AdminDashboard from './components/AdminDashboard'
 function RouterPath() {
     const {loggedUser}=useContext(AuthContext);
     return (
@@ -30,6 +32,8 @@ function RouterPath() {
               <Route path="/addnotablealumni" component={SubmitNotable} />
               <Route path="/searchBy" component={SearchBy} />
               <Route path="/updatebyadmin/:id" exact component={UpdateByAdmin} />
+              <Route path="/sendmessage" component={SendMessage} />
+              <Route path="/admindashboard" component={AdminDashboard} />
               { loggedUser===true && <>
               <Route path="/resetpassword" exact component={ResetPass} />
               

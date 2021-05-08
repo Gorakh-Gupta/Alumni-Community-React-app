@@ -117,9 +117,10 @@ router.post('/notable',async (req,res)=>{
 	.catch((err)=>console.log(err))
 })
 router.get('/:id',authUser,async (req,res)=>{
-	const id=req.user;
-	await User.find({roll:id})
+	const {id}=req.params;
+	await User.find({roll:parseInt(id)})
 	.then((data)=>{
+		// console.log(data);
 		res.json(data);
 	})
 	.catch((err)=>console.log(err))
