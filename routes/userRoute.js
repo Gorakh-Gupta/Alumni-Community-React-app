@@ -2,6 +2,7 @@ const express=require('express');
 const router=express.Router();
 const mongoose = require('mongoose');
 const User=require('../models/user');
+const Faq=require('../models/Faq');
 const Notable=require('../models/notable')
 const bcrypt = require('bcrypt');
 const multer  = require('multer')
@@ -31,19 +32,37 @@ router.post('/login',async (req,res)=>{
 		res.json({msg:'NO valid username and password'});
 	}
 })
+router.get('/allfaqs',async (req,res)=>{
+	await Faq.find({answer:{$exists:true,$ne:""}})
+	.then((data)=>res.json(data))
+	.catch((e)=>console.log(e))
+})
+router.post('/faq',async (req,res)=>{
+	const faq=new Faq({question:req.body.question});
+	faq.save()
+	.then(()=>res.json({success:true}))
+	.catch((e)=>console.log(e))
+})
 router.get('/logout',(req,res)=>{
 	res.cookie("token","",{httpOnly:true,expires:new Date(0)}).send();
 })
 router.get('/loggedIn',(req,res)=>{
 	const token=req.cookies.token;
 	if(!token)
-		return res.status(401).json({msg:"Unauthorized"});
+		return res.json({msg:"Unauthorized"});
 	const authorized=jwt.verify(token,process.env.JWT_SECRET)
 	if(!authorized)
 	{
-		return res.status(401).json({msg:"Unauthorized"});
+		return res.json({msg:"Unauthorized"});
 	}
+	if(!authorized.id)
+		return res.json({msg:"Unauthorized"});
 	res.send(true);
+})
+router.get('/loggeduser',authUser,async (req,res)=>{
+	await User.findOne({roll:req.user})
+	.then((data)=>res.json(data))
+	.catch((e)=>console.log(e))
 })
 router.post('/resetpass',async (req,res)=>{
 	const {pass,token}=req.body;

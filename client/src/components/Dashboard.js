@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Nav from 'react-bootstrap/Nav'
 import axios from 'axios'
+import About from './About';
+import Notice from './Notice';
 // import Profile from './Profile'
 // import ChangeProfile from './ChangeProfile';
 // import NewProfile from './NewProfile';
@@ -46,7 +48,7 @@ function Dashboard(props) {
           <Nav.Link href={`/changepassword/${props.match.params.id}`}>Change Password</Nav.Link>
         </Nav.Item>
         <NavDropdown title="More" id="nav-dropdown">
-        <NavDropdown.Item eventKey="4.1">Action</NavDropdown.Item>
+        <NavDropdown.Item href="/faq" eventKey="4.1">FAQ</NavDropdown.Item>
         <NavDropdown.Item eventKey="4.2">Another action</NavDropdown.Item>
         <NavDropdown.Item eventKey="4.3">Something else here</NavDropdown.Item>
         <NavDropdown.Divider />
@@ -57,7 +59,7 @@ function Dashboard(props) {
       {user.length>0 && <div><p><h1>Welcome {user[0].name}</h1></p></div>}
       {user.length>0 && 
       
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '20rem' }}>
          <Card.Img variant="top" src={user[0].photo.url} />
         <Card.Body>
           <Card.Title>{user[0].name}</Card.Title>
@@ -74,7 +76,18 @@ function Dashboard(props) {
         </Card.Body>
     </Card>
       }
-
+    {/* <div style={{ display: "flex" }}>
+           <div style={{width: "60%"}}>
+           <About/>
+           </div>
+           <div style={{
+            width: "40%",
+            maxHeight:"100vh",
+            background: "#f0f0f0"
+            }}>
+           <Notice/>
+           </div>
+      </div> */}
     </div>
   );
 }

@@ -12,7 +12,9 @@ function SendMessage() {
         e.preventDefault();
         console.log("Sent");
         axios.post('http://localhost:8080/admin/sendmail',{mail,sub,content})
-        .then((data)=>setMsg(data.data.msg))
+        .then((data)=>{
+            setMsg(data.data.msg);
+        })
         .catch((e)=>console.log(e))
     }
     return (

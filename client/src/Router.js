@@ -21,19 +21,28 @@ import LoginAdmin from './components/LoginAdmin'
 import AuthContext from './context/AuthContext'
 import SendMessage from './components/SendMessage'
 import AdminDashboard from './components/AdminDashboard'
+import LoginOTP from './components/LoginOTP'
+import Post from './components/Post'
+import FAQ from './components/FAQ'
+import UploadNotice from './components/UploadNotice'
+import AnswerFaq from './components/AnswerFaq'
+import SinglePost from './components/SinglePost'
 function RouterPath() {
-    const {loggedUser}=useContext(AuthContext);
+    const {loggedUser,loggedAdmin}=useContext(AuthContext);
     return (
         <div>
             <Router>
             <Switch>
               <Route path="/admin/login" exact component={LoginAdmin} />
               <Route path="/admin/signup" exact component={SignupAdmin} />
-              <Route path="/addnotablealumni" component={SubmitNotable} />
-              <Route path="/searchBy" component={SearchBy} />
-              <Route path="/updatebyadmin/:id" exact component={UpdateByAdmin} />
-              <Route path="/sendmessage" component={SendMessage} />
-              <Route path="/admindashboard" component={AdminDashboard} />
+              <Route path="/admin/loginOTP" exact component={LoginOTP} />
+              <Route path="/" exact component={Navi} />
+              <Route path="/reset/:token" component={Reset} />
+                <Route path="/login" component={Login} />
+                <Route path="/notablealumni" component={NotableAlumni} />
+                <Route path="/signup" component={Signup} />
+
+              
               { loggedUser===true && <>
               <Route path="/resetpassword" exact component={ResetPass} />
               
@@ -48,19 +57,21 @@ function RouterPath() {
               <Route path="/login" component={Login} />
               <Route path="/notablealumni" component={NotableAlumni} />
               <Route path="/signup" component={Signup} />
+              <Route path="/post/:id" component={SinglePost} />
+              <Route path="/faq" component={FAQ} />
               </>
               }
               {
-                  !loggedUser && 
-                  <>
-                  <Route path="/reset/:token" component={Reset} />
-                  <Route path="/" exact component={Navi} />
-                  <Route path="/login" component={Login} />
-                  <Route path="/notablealumni" component={NotableAlumni} />
-                  <Route path="/signup" component={Signup} />
+                  loggedAdmin==true && <>
+                    <Route path="/addnotablealumni" component={SubmitNotable} />
+                    <Route path="/searchBy" component={SearchBy} />
+                    <Route path="/sendmessage" component={SendMessage} />
+                    <Route path="/admindashboard" component={AdminDashboard} />
+                    <Route path="/updatebyadmin/:id" exact component={UpdateByAdmin} />
+                    <Route path="/uploadnotice" component={UploadNotice} />
+                    <Route path="/answerfaq" component={AnswerFaq} />
                   </>
               }
-              
             </Switch>  
         </Router>
         </div>

@@ -1,9 +1,11 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import axios from 'axios'
 import Alert from 'react-bootstrap/Alert'
+import AuthContext from '../context/AuthContext';
 
 function LoginAdmin(props) {
     const [mob, setMob] = useState('');
+    const {getLoggedAdmin}=useContext(AuthContext);
 const [password, setpassword] = useState('');
 const [msg, setMsg] = useState(false);
 const submitchange=(event)=>{
@@ -12,6 +14,7 @@ const submitchange=(event)=>{
         .then((data)=>{
             if(!data.data.msg)
             {
+                getLoggedAdmin();
                 props.history.push('/admindashboard') ;
             }
             else
@@ -43,7 +46,7 @@ useEffect(()=>{
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
                 <p className="forgot-password text-right">
-                     <a href="/resetpassword">Log In Using OTP?</a>
+                     <a href="/admin/loginOTP">Log In Using OTP?</a>
                 </p>
             </form>
             {msg && <Alert variant="danger" >

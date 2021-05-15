@@ -8,6 +8,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const userRouter=require('./routes/userRoute');
 const adminRouter=require('./routes/adminRoute');
+const postRouter=require('./routes/postRoute');
 const session=require('express-session');
 const cookieParser=require('cookie-parser');
 mongoose.connect('mongodb://localhost:27017/alumnidata', {useNewUrlParser: true, useUnifiedTopology: true})
@@ -23,6 +24,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ extended: false }));
 app.use('/users',userRouter);
 app.use('/admin',adminRouter);
+app.use('/',postRouter);
 app.listen(8080,(req,res)=>{
 	console.log('server is listening');
 })
