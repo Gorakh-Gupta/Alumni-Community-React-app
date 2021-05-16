@@ -56,25 +56,44 @@ function Dashboard(props) {
       </NavDropdown>
       </Nav>
       {user.length===0 && <h4>Loading</h4>}
-      {user.length>0 && <div><p><h1>Welcome {user[0].name}</h1></p></div>}
       {user.length>0 && 
-      
-      <Card style={{ width: '20rem' }}>
-         <Card.Img variant="top" src={user[0].photo.url} />
-        <Card.Body>
-          <Card.Title>{user[0].name}</Card.Title>
-          <Card.Text>
-            <h3>Roll no: {user[0].roll}</h3>
-            <h3>Branch: {user[0].branch}</h3>
-            <h6>Year of Graduation:{user[0].year}</h6>
-            <h6>Mobile:{user[0].mob}</h6>
-            <h6>Email:{user[0].mail}</h6>
-            {user[0].designation && <h6>Designation:{user[0].designation}</h6>}
-            {user[0].organization && <h6>Organization:{user[0].organization}</h6>}
-          </Card.Text>
-          <Button variant="primary" onClick={()=>props.history.push("/Changeprofile/"+props.match.params.id)}>Update Profile Photo</Button>
-        </Card.Body>
-    </Card>
+      <center>
+      <Card style={{ width: '45rem' ,borderStyle:"solid",marginTop:"20px"}}>
+          <center>
+          <Card.Img variant="top" src={user[0].photo.url} alt="Add image here" style={{height:"20vh",width:"160px",overflow:"hidden",marginTop:"20px"}}/>
+          </center>
+               <Card.Body>
+               <Button variant="primary" onClick={()=>props.history.push("/Changeprofile/"+props.match.params.id)}>Update Profile Photo</Button>
+                {/* <Card.Title>Profile</Card.Title> */}
+                <hr/>
+                  <Card.Text>
+                    <table>
+                      <tr>
+                  <td style={{paddingRight:"20px"}}>Name : {user[0].name}</td>
+                  <td >Roll : 1806188</td>
+                      </tr>
+                    <tr>
+                  <td style={{paddingRight:"20px"}}>Year of Graduation : {user[0].year}</td>   
+                  <td>Branch : CSE</td> 
+                     </tr>
+                     <tr>
+                  <td style={{paddingRight:"20px"}}>Mobile No. {user[0].mob}</td>
+                  <td>Mail :{user[0].mail}</td>
+                      </tr>
+                    <tr>
+                  <td style={{paddingRight:"20px"}}>Designaation : {user[0].designation}</td>   
+                  <td>Orgnization : {user[0].organization}</td> 
+                     </tr>   
+                    </table>
+                  </Card.Text>
+                  <p style={{borderStyle:"solid",backgroundColor:"ivory",height:"25vh",overflowY:"scroll"}}>
+                    <b>BIO</b>
+                    <hr/>
+                    {user[0].bio}
+                  </p>
+               </Card.Body>
+       </Card>
+       </center>
       }
     {/* <div style={{ display: "flex" }}>
            <div style={{width: "60%"}}>

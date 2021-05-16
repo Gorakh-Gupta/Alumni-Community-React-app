@@ -142,7 +142,10 @@ router.get('/search',async (req,res)=>{
 router.delete('/delete/:id',auth,async (req,res)=>{
 	const {id}=req.params;
 	await User.findOneAndDelete({roll:parseInt(id)})
-	.then((data)=>res.send())
+	.then((data)=>{
+		
+		res.send()
+	})
 	.catch((err)=>console.log(err))
 })
 router.post('/',async (req,res)=>{

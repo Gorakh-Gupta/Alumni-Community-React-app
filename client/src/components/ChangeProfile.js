@@ -39,7 +39,8 @@ function ChangeProfile(props) {
         fetchAPI();
     }, [])
     return (
-        <div>
+        <div style={{width:400,height:300,marginLeft:550,marginTop:200}}>
+            <h3 style={{textAlign:'justify'}}>Profile Picture Change</h3>
            <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={user.photo.url} />
                 <Card.Body>
@@ -47,7 +48,7 @@ function ChangeProfile(props) {
                 {/* <Button variant="primary"></Button> */}
                 <form onSubmit={submithandler}>
                     <input type="file" accept="image/*" onChange={(e)=>setSelectedFile(e.target.files[0])}/>
-                <Button type="submit" variant="primary">Update</Button>
+                {selectedFile && <Button style={{marginTop:"10px"}} type="submit" className="btn btn-primary btn-block" variant="primary">Update</Button>}
                 </form>
             </Card.Body>
             </Card>

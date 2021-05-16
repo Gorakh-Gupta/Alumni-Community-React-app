@@ -28,6 +28,12 @@ router.post('/addpost',auth,async (req,res)=>{
 		time:utcdate,
 	})
 	newpost.save()
+	.then(async ()=>{
+		const newuser=await User.findOne({roll:roll})
+		newuser.posts.push(newpost);
+		newuser.save()
+		.catch((e)=>console.log(e))
+	})
 	.catch((e)=>console.log(e));
 	await Post.find({})
 	.then((data)=>res.json(data))
@@ -64,7 +70,12 @@ router.get('/unlike/:id',auth,async (req,res)=>{
 })
 router.delete('/delete/:id',auth,async (req,res)=>{
 	const {id}=req.params;
+	const roll=req.user;
 	await Post.deleteOne({_id:id})
+	.then(async ()=>{
+		await User.findOneAndUpdate({roll:roll},{$pull:{posts:id}})
+		.catch(e=>console.log(e))
+	})
 	.catch((e)=>console.log(e))
 })
 module.exports=router;

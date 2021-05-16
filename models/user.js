@@ -1,5 +1,6 @@
 const mongoose=require('mongoose')
 const Schema = mongoose.Schema;
+const Post=require('./post')
 const userSchema = new Schema({
 	name:{
 		type: String,
@@ -49,7 +50,12 @@ const userSchema = new Schema({
 	token:String,
 	expire:{
 		type:Number,
-	}
+	},
+	posts:[
+	{
+		type:Schema.Types.ObjectId,
+		ref:'Post'
+	}]
 });
 const User=new mongoose.model('User',userSchema);
 module.exports=User;
