@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const connectDB=async ()=>{
-	mongoose.connect('mongodb://localhost/student', {useNewUrlParser: true, useUnifiedTopology: true}).
+	//mongodb://localhost/student
+	mongoose.connect('mongodb+srv://DbUser:DbUser@cluster0.apwot.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}).
 	then(()=>{
 	console.log('mongodb connected')
 	})
