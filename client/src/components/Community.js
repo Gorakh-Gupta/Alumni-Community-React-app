@@ -1,10 +1,8 @@
 import React ,{useState, useEffect,useContext}from 'react'
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import AddPost from './AddPost';
 import authContext from '../context/AuthContext';
 import {Badge,Button, Form, FormControl, Image} from 'react-bootstrap'
-import { Card } from '@material-ui/core';
 import CommunityHelper from './CommunityHelper';
 function Community() {
     // const {user}=useContext(authContext);

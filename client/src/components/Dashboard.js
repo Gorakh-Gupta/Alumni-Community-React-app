@@ -7,9 +7,6 @@ import Nav from 'react-bootstrap/Nav'
 import axios from 'axios'
 import About from './About';
 import Notice from './Notice';
-// import Profile from './Profile'
-// import ChangeProfile from './ChangeProfile';
-// import NewProfile from './NewProfile';
 function Dashboard(props) {
     const [user, setUser] = useState([]);
     useEffect(() => {
@@ -70,7 +67,7 @@ function Dashboard(props) {
                     <table>
                       <tr>
                   <td style={{paddingRight:"20px"}}>Name : {user[0].name}</td>
-                  <td >Roll : 1806188</td>
+                  <td >Roll : {user[0].roll}</td>
                       </tr>
                     <tr>
                   <td style={{paddingRight:"20px"}}>Year of Graduation : {user[0].year}</td>   
