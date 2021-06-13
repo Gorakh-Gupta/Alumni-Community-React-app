@@ -1,5 +1,4 @@
-# Alumni-System
-Alumni Tracking System
+# Alumni Tracking System
 A web based application for college to track its Alumni. The said application has the following features:-
 • allow the Alumni to register themselves
 • allow the Alumni to upload and change their profile picture by storing on cloudinary • provision for alumni to update their details
