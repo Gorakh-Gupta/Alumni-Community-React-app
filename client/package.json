@@ -9,6 +9,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
+    "postcss-safe-parser": "^7.0.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.1",
