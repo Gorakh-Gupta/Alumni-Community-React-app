@@ -45,9 +45,9 @@ useEffect(()=>{
                     <input type="password" className="form-control" placeholder="Enter password" value={password} onChange={(event)=>setpassword(event.target.value)}/>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                <p className="forgot-password text-right">
+                {/* <p className="forgot-password text-right">
                      <a href="/admin/loginOTP">Log In Using OTP?</a>
-                </p>
+                </p> */}
             </form>
             {msg && <Alert variant="danger" >
 				<Alert.Heading>Incorrect Username or Password</Alert.Heading>	
