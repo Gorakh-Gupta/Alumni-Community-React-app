@@ -35,10 +35,16 @@ function Navi() {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Image fluid style={{ height: 350, width: 885, margin: 40, marginLeft: 300 }} src="https://upload.wikimedia.org/wikipedia/commons/3/32/NIT_main_building_Patna.jpg" />
-            <Jumbotron>
-                <h1 style={{ marginLeft: 300 }}>Welcome Alumni of NIT Patna</h1>
-                <p style={{ marginLeft: 300 }}>
+            <Image fluid style={{
+                height: 'calc(100vh - 357px)',
+                margin: '27px',
+                marginLeft: '20%',
+                marginRight: '20%',
+                width: '60%',
+            }} src="https://upload.wikimedia.org/wikipedia/commons/3/32/NIT_main_building_Patna.jpg" />
+            <Jumbotron style={{ padding: '2rem 2rem',marginBottom: 0  }}>
+                <h1 style={{ }}>Welcome Alumni of NIT Patna</h1>
+                <p style={{  }}>
                     This is a platform aimed to connect the alumni of our elite Institute. This offers Following features.
                     <ul>
                         <li>Receive frequent Updates about college</li>
