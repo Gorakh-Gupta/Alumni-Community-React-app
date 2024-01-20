@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Alert from 'react-bootstrap/Alert'
 import AuthContext from '../context/AuthContext';
+import { now } from 'mongoose';
 function Login(props) {
 
     const [rollno, setrollno] = useState('');
@@ -29,8 +30,15 @@ function Login(props) {
     return (
         <div>
 
-            <div style={{ width: 400, height: 300, marginLeft: 500, marginTop: 200 }}>
-                <form onSubmit={submitchange}>
+            <div style={{
+                height: '300px',
+                margin: 'auto',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh',
+            }}>
+                <form onSubmit={submitchange} style={{ width: '400px', flex: '0 0 auto' }}>
                     <h3>Sign In</h3>
 
                     <div className="form-group">
@@ -47,12 +55,14 @@ function Login(props) {
                         <a href="/resetpassword">Forgot password?</a>
                     </p>
                 </form>
-                {msg && <Alert variant="danger" >
-                    <Alert.Heading>Incorrect Username or Password</Alert.Heading>
-                </Alert>}
-            </div>
+                {
+                    msg && <Alert variant="danger" >
+                        <Alert.Heading>Incorrect Username or Password</Alert.Heading>
+                    </Alert>
+                }
+            </div >
 
-        </div>
+        </div >
     )
 }
 
