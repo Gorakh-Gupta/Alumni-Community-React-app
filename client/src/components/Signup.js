@@ -41,7 +41,7 @@ function Signup(props) {
 		setCheck(false)
 	}, [name, roll, mail, mob, year, branch, pass])
 	return (
-		<div className='container' style={{ width: 400, height: 50, marginLeft: 500, marginTop: 20 }}>
+		<div className='container' style={{width: '30%',margin: '0 auto' }}>
 			{success &&
 				<Alert variant="success">
 					<Alert.Heading>Signed Up Successfully. Redirecting to Homepage...</Alert.Heading>
@@ -52,7 +52,7 @@ function Signup(props) {
 				</Alert>
 			}
 			<h1>Sign Up</h1>
-			<Form onSubmit={osubmit}>
+			<Form onSubmit={osubmit} style={{ lineHeight: 1.2 }}>
 				<Form.Group controlId="formBasicEmail">
 					<Form.Label>Name</Form.Label>
 					<Form.Control type="name" value={name} onChange={(e) => setName(e.target.value)} />
