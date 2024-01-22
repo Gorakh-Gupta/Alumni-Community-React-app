@@ -34,6 +34,7 @@ function Login(props) {
                 height: '300px',
                 margin: 'auto',
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100vh',
