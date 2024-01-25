@@ -43,7 +43,7 @@ function LoginAdmin(props) {
 
                     <div className="form-group">
                         <label>Mobile Number</label>
-                        <input type="text" className="form-control" placeholder="Enter Mobile Number" value={mob} onChange={(event) => setMob(event.target.value)} />
+                        <input type="tel" className="form-control" placeholder="Enter Mobile Number" value={mob} onChange={(event) => setMob(event.target.value)} />
                     </div>
 
                     <div className="form-group">

@@ -1,5 +1,6 @@
 import React, {useState , useEffect} from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
+import'../App.css'
 import axios from 'axios'
 function SignupAdmin(props) {
     const [name, setName] = useState('')
@@ -35,7 +36,7 @@ function SignupAdmin(props) {
 			setCheck(false)
 		}, [name,mail,mob,pass])
 	return (
-		<div className='container'  style={{width:400,height:50,marginLeft:500,marginTop:20}}>
+		<div className='container' >
 			{success && 
 			<Alert variant="success">
 				<Alert.Heading>Signed Up Successfully. Redirecting to Homepage...</Alert.Heading>
