@@ -32,7 +32,43 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+/* 
+@media (min-width: 1200px) {
+  .container {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .container {
+    width: 50%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 50%;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 50%;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    width: 50%;
+  }
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+} */
