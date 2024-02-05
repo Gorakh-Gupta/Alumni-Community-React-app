@@ -13,7 +13,7 @@ const session=require('express-session');
 const cookieParser=require('cookie-parser');
 const path=require('path');
 //mongodb://localhost:27017/alumnidata  "local mongo"
-mongoose.connect('mongodb+srv://gorakh123:Gupta%40123@cluster0.llsjq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb+srv://gorakh123:'+process.env.MONGO_PW+'@cluster0.llsjq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=>{
 	console.log('Database connected');
 })
